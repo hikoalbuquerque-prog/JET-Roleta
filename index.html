@@ -82,45 +82,32 @@ const PRIZES = [
     ctaAction:  () => alert("Redirecionar para ativação do plano Plus"),
   },
 
-  // ── PARCEIROS ─────────────────────────────────────────
+  // ── PARCEIRO: H2 POKER ────────────────────────────────
   {
-    name:       "R$30\nNubank",
-    label:      "R$30 de Crédito Nubank",
-    detail:     "Você ganhou R$30 em cashback no Nubank. Acesse o app para resgatar.",
-    icon:       "💜",
-    tag:        "Nubank",
-    tagColor:   "#820AD1",
+    name:       "5 Rodadas\nH2 Poker",
+    label:      "5 Rodadas Grátis no H2 Poker!",
+    detail:     "Você ganhou 5 rodadas grátis no H2 Poker. Acesse o app para resgatar.",
+    icon:       "♠️",
+    tag:        "H2 Poker",
+    tagColor:   "#B71C1C",
     win:        true,
-    weight:     6,
-    sliceColor: "#4A148C",
-    ctaLabel:   "RESGATAR NO NUBANK",
-    ctaAction:  () => alert("Redirecionar para resgate Nubank"),
+    weight:     8,
+    sliceColor: "#7F0000",
+    ctaLabel:   "RESGATAR NO H2 POKER",
+    ctaAction:  () => alert("Redirecionar para resgate H2 Poker"),
   },
   {
-    name:       "R$25\nBanco BB",
-    label:      "R$25 de Bônus Banco do Brasil",
-    detail:     "Crédito de R$25 via Ourocard ou conta BB. Resgate pelo app BB.",
-    icon:       "🏦",
-    tag:        "Banco do Brasil",
-    tagColor:   "#C8A800",
+    name:       "10 Rodadas\nH2 Poker",
+    label:      "10 Rodadas Grátis no H2 Poker!",
+    detail:     "Você ganhou 10 rodadas grátis no H2 Poker. Acesse o app para resgatar.",
+    icon:       "🃏",
+    tag:        "H2 Poker",
+    tagColor:   "#B71C1C",
     win:        true,
-    weight:     6,
-    sliceColor: "#1B5E20",
-    ctaLabel:   "RESGATAR NO BB",
-    ctaAction:  () => alert("Redirecionar para resgate Banco do Brasil"),
-  },
-  {
-    name:       "1GB\nVivo",
-    label:      "1GB de Internet Vivo Grátis",
-    detail:     "1GB de dados bônus Vivo ativado no seu número. Válido por 7 dias.",
-    icon:       "📱",
-    tag:        "Vivo",
-    tagColor:   "#6600CC",
-    win:        true,
-    weight:     7,
-    sliceColor: "#38006B",
-    ctaLabel:   "VER DETALHES VIVO",
-    ctaAction:  () => alert("Redirecionar para detalhes Vivo"),
+    weight:     5,
+    sliceColor: "#5D0000",
+    ctaLabel:   "RESGATAR NO H2 POKER",
+    ctaAction:  () => alert("Redirecionar para resgate H2 Poker"),
   },
 
   // ── TENTE NOVAMENTE ───────────────────────────────────
@@ -277,55 +264,97 @@ const CONFIG = {
   .wheel-section {
     width: 100%; max-width: 430px;
     display: flex; flex-direction: column; align-items: center;
-    padding: 16px 18px 0;
+    padding: 10px 18px 0;
     position: relative; z-index: 10;
   }
 
-  .pointer-wrap {
+  /* Plataforma de cassino */
+  .wheel-platform {
     position: relative;
-    --wsize: min(290px, calc(100vw - 52px));
-    width: var(--wsize); height: var(--wsize);
+    --wsize: min(310px, calc(100vw - 40px));
+    width: calc(var(--wsize) + 28px);
+    height: calc(var(--wsize) + 28px);
     display: flex; align-items: center; justify-content: center;
   }
 
-  .pointer {
-    position: absolute; top: -13px; left: 50%;
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 22px solid var(--white);
-    filter: drop-shadow(0 2px 8px rgba(255,255,255,0.7));
-    z-index: 20;
+  /* Glow externo */
+  .wheel-platform::before {
+    content: '';
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 55%, rgba(21,101,192,0.4) 100%);
+    animation: platformGlow 3s ease-in-out infinite alternate;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes platformGlow { from{opacity:.5} to{opacity:1} }
+
+  /* Aro dourado externo — estilo cassino */
+  .wheel-rim {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      #7A6000 0deg, #FFE566 15deg, #C8A000 30deg, #FFE566 45deg,
+      #7A6000 60deg, #FFE566 75deg, #C8A000 90deg, #FFE566 105deg,
+      #7A6000 120deg, #FFE566 135deg, #C8A000 150deg, #FFE566 165deg,
+      #7A6000 180deg, #FFE566 195deg, #C8A000 210deg, #FFE566 225deg,
+      #7A6000 240deg, #FFE566 255deg, #C8A000 270deg, #FFE566 285deg,
+      #7A6000 300deg, #FFE566 315deg, #C8A000 330deg, #FFE566 345deg, #7A6000 360deg
+    );
+    box-shadow: 0 0 0 2px #4A3800, 0 0 35px rgba(200,160,0,0.5), 0 0 70px rgba(21,101,192,0.25);
+    z-index: 1;
   }
 
+  /* Roda interna com fatias */
   .wheel-outer {
+    position: absolute;
     width: var(--wsize); height: var(--wsize);
     border-radius: 50%;
-    border: 5px solid rgba(255,255,255,0.85);
-    box-shadow:
-      0 0 0 2px var(--blue-mid),
-      0 0 45px rgba(21,101,192,0.55),
-      inset 0 0 35px rgba(0,0,0,0.45);
-    position: relative;
+    border: 4px solid #C8A000;
+    box-shadow: 0 0 0 2px #4A3800, inset 0 0 40px rgba(0,0,0,0.65);
+    z-index: 2;
   }
 
+  /* Ponteiro estilo cassino */
+  .pointer-wrap {
+    position: absolute;
+    top: 2px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex; flex-direction: column; align-items: center;
+    filter: drop-shadow(0 2px 8px rgba(200,160,0,0.8));
+  }
+  .pointer-stem {
+    width: 5px; height: 16px;
+    background: linear-gradient(to bottom, #FFE566, #C8A000);
+    border-radius: 3px 3px 0 0;
+  }
+  .pointer-head {
+    width: 0; height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 16px solid #FFE566;
+  }
+
+  /* Hub central giratório */
   .wheel-center {
     position: absolute;
-    width: 56px; height: 56px;
-    background: linear-gradient(135deg, #fff 0%, #B3D4FF 100%);
+    width: 14%; aspect-ratio: 1;
+    background: radial-gradient(circle at 35% 35%,
+      #fff 0%, #B3D4FF 35%, #1565C0 65%, #0D47A1 100%);
     border-radius: 50%;
     top: 50%; left: 50%; transform: translate(-50%, -50%);
-    border: 3px solid rgba(255,255,255,0.95);
-    box-shadow: 0 0 22px rgba(66,165,245,0.9), 0 4px 12px rgba(0,0,0,0.3);
+    border: 3px solid #FFE566;
+    box-shadow: 0 0 0 1px #C8A000, 0 0 20px rgba(66,165,245,0.9), 0 0 35px rgba(200,160,0,0.35);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.45rem; z-index: 15;
+    font-size: clamp(0.8rem, 3vw, 1.2rem); z-index: 15;
+    animation: hubSpin 8s linear infinite;
   }
+  @keyframes hubSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
   /* ── SPIN BUTTON ── */
   .spin-btn {
-    margin-top: 18px;
-    width: 100%; max-width: var(--wsize, 290px);
+    margin-top: 16px;
+    width: 100%; max-width: min(310px, calc(100vw - 40px));
     padding: 16px;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.4rem; letter-spacing: 3px; color: #fff;
@@ -511,8 +540,12 @@ const CONFIG = {
 </div>
 
 <div class="wheel-section">
-  <div class="pointer-wrap">
-    <div class="pointer"></div>
+  <div class="wheel-platform">
+    <div class="wheel-rim"></div>
+    <div class="pointer-wrap">
+      <div class="pointer-stem"></div>
+      <div class="pointer-head"></div>
+    </div>
     <div class="wheel-outer" id="wheel">
       <div class="wheel-center">🛴</div>
     </div>
@@ -600,51 +633,151 @@ canvas.style.cssText = 'position:absolute;top:0;left:0;border-radius:50%;';
 wheelEl.insertBefore(canvas, wheelEl.firstChild);
 
 function drawWheel(rotation = 0) {
-  const size = wheelEl.offsetWidth || Math.min(290, window.innerWidth - 52);
+  const size = wheelEl.offsetWidth || Math.min(310, window.innerWidth - 40);
   canvas.width = size; canvas.height = size;
   const ctx = canvas.getContext('2d');
-  const cx  = size / 2, cy = size / 2, r = size / 2 - 2;
+  const cx  = size / 2, cy = size / 2;
+  const rOuter = size / 2 - 1;
+  const rInner = rOuter * 0.14; // hub radius
   const totalW = PRIZES.reduce((s, p) => s + p.weight, 0);
-  let angle = rotation - Math.PI / 2;
+
   ctx.clearRect(0, 0, size, size);
 
-  PRIZES.forEach(p => {
+  // ── 1. FATIAS ────────────────────────────────────────
+  let angle = rotation - Math.PI / 2;
+  PRIZES.forEach((p, idx) => {
     const slice = (p.weight / totalW) * 2 * Math.PI;
+    const mid   = angle + slice / 2;
+
+    // Gradiente radial por fatia
+    const grd = ctx.createRadialGradient(cx, cy, rInner, cx, cy, rOuter);
+    grd.addColorStop(0,   lighten(p.sliceColor, 30));
+    grd.addColorStop(0.5, p.sliceColor);
+    grd.addColorStop(1,   darken(p.sliceColor, 25));
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.arc(cx, cy, rOuter, angle, angle + slice);
     ctx.closePath();
-    ctx.fillStyle = p.sliceColor;
+    ctx.fillStyle = grd;
     ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+
+    angle += slice;
+  });
+
+  // ── 2. SEPARADORES METÁLICOS ──────────────────────────
+  angle = rotation - Math.PI / 2;
+  PRIZES.forEach(p => {
+    const slice = (p.weight / totalW) * 2 * Math.PI;
+    // linha separadora
+    ctx.beginPath();
+    ctx.moveTo(cx + rInner * Math.cos(angle), cy + rInner * Math.sin(angle));
+    ctx.lineTo(cx + rOuter * Math.cos(angle), cy + rOuter * Math.sin(angle));
+    ctx.strokeStyle = 'rgba(200,160,0,0.6)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
+    // pino metálico no separador (a ~80% do raio)
+    const pinR = rOuter * 0.82;
+    const px2 = cx + pinR * Math.cos(angle);
+    const py2 = cy + pinR * Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(px2, py2, size * 0.012, 0, 2 * Math.PI);
+    const pinGrd = ctx.createRadialGradient(px2 - size*0.004, py2 - size*0.004, 0, px2, py2, size*0.012);
+    pinGrd.addColorStop(0, '#fff');
+    pinGrd.addColorStop(0.4, '#FFE566');
+    pinGrd.addColorStop(1, '#7A6000');
+    ctx.fillStyle = pinGrd;
+    ctx.fill();
+    angle += slice;
+  });
+
+  // ── 3. ANEL BRILHANTE INTERNO ─────────────────────────
+  ctx.beginPath();
+  ctx.arc(cx, cy, rOuter * 0.88, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(200,160,0,0.25)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // ── 4. TEXTO NAS FATIAS ───────────────────────────────
+  angle = rotation - Math.PI / 2;
+  PRIZES.forEach(p => {
+    const slice = (p.weight / totalW) * 2 * Math.PI;
+    const mid   = angle + slice / 2;
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(angle + slice / 2);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#fff';
-    ctx.shadowColor = 'rgba(0,0,0,0.9)';
+    // Rotacionar para o centro da fatia
+    ctx.rotate(mid);
+    // Texto vai da direita (borda) para esquerda (centro), ao longo do eixo X
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.shadowColor = 'rgba(0,0,0,0.95)';
     ctx.shadowBlur = 5;
+
     const lines = p.name.split('\n');
-    const lh = Math.max(11, size * 0.038);
-    const fs = Math.max(9, size * 0.034);
-    ctx.font = `bold ${fs}px Nunito, sans-serif`;
+    const fs = Math.max(8.5, size * 0.031);
+    const lh = fs * 1.3;
+    ctx.font = `900 ${fs}px Nunito, sans-serif`;
+    ctx.fillStyle = '#fff';
+
+    // Posição X = distância do centro onde o texto aparece (ao longo do raio)
+    const textDist = rOuter * 0.62;
+    const totalTextH = (lines.length - 1) * lh;
+
     lines.forEach((line, li) => {
-      const y = -((lines.length - 1) * lh / 2) + li * lh;
-      ctx.fillText(line, r - 13, y + fs * 0.4);
+      const offsetY = -totalTextH / 2 + li * lh;
+      ctx.fillText(line, textDist, offsetY);
     });
+
     ctx.restore();
     angle += slice;
   });
 
+  // ── 5. ANEL EXTERNO DOURADO ───────────────────────────
+  // Anel de fundo
   ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.8)';
-  ctx.lineWidth = 4;
+  ctx.arc(cx, cy, rOuter, 0, 2 * Math.PI);
+  const rimGrd = ctx.createLinearGradient(0, 0, size, size);
+  rimGrd.addColorStop(0, '#FFE566');
+  rimGrd.addColorStop(0.5, '#C8A000');
+  rimGrd.addColorStop(1, '#FFE566');
+  ctx.strokeStyle = rimGrd;
+  ctx.lineWidth = 5;
   ctx.stroke();
+
+  // Bolinhas decorativas no aro
+  const nBalls = 24;
+  for (let i = 0; i < nBalls; i++) {
+    const a  = (i / nBalls) * 2 * Math.PI;
+    const br = rOuter - 3;
+    const bx = cx + br * Math.cos(a);
+    const by = cy + br * Math.sin(a);
+    ctx.beginPath();
+    ctx.arc(bx, by, size * 0.016, 0, 2 * Math.PI);
+    const bg = ctx.createRadialGradient(bx - size*0.005, by - size*0.005, 0, bx, by, size*0.016);
+    bg.addColorStop(0, '#fff');
+    bg.addColorStop(0.4, '#FFE566');
+    bg.addColorStop(1, '#7A6000');
+    ctx.fillStyle = bg;
+    ctx.fill();
+  }
+}
+
+// Helpers de cor para gradiente das fatias
+function lighten(hex, pct) {
+  const n = parseInt(hex.replace('#',''), 16);
+  const r = Math.min(255, (n>>16) + Math.round(2.55*pct));
+  const g = Math.min(255, ((n>>8)&0xff) + Math.round(2.55*pct));
+  const b = Math.min(255, (n&0xff) + Math.round(2.55*pct));
+  return `rgb(${r},${g},${b})`;
+}
+function darken(hex, pct) {
+  const n = parseInt(hex.replace('#',''), 16);
+  const r = Math.max(0, (n>>16) - Math.round(2.55*pct));
+  const g = Math.max(0, ((n>>8)&0xff) - Math.round(2.55*pct));
+  const b = Math.max(0, (n&0xff) - Math.round(2.55*pct));
+  return `rgb(${r},${g},${b})`;
 }
 
 let currentRotation = 0;
