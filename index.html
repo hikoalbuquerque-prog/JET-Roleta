@@ -152,17 +152,24 @@ const CONFIG = {
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-  html { height: 100%; }
+  html {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   body {
     background: var(--bg);
     font-family: 'Nunito', sans-serif;
     color: var(--text);
-    min-height: 100dvh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
   }
 
   body::before {
@@ -383,9 +390,11 @@ const CONFIG = {
 
   /* ── PRIZES ── */
   .prizes-section {
-    width: 100%; max-width: 430px;
-    padding: 20px 18px 8px;
+    width: 100%;
+    max-width: 430px;
+    padding: 16px 18px 12px;
     position: relative; z-index: 10;
+    flex-shrink: 0;
   }
 
   .section-title {
@@ -395,7 +404,10 @@ const CONFIG = {
   }
 
   .prizes-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
   }
 
   .prize-card {
@@ -405,6 +417,7 @@ const CONFIG = {
     padding: 11px 10px;
     display: flex; align-items: center; gap: 9px;
     transition: border-color 0.2s;
+    min-width: 0; /* impede card de estourar o grid */
   }
   .prize-card:active { border-color: var(--blue-light); background: var(--bg3); }
 
@@ -426,8 +439,9 @@ const CONFIG = {
   /* ── DAILY ── */
   .daily-info {
     width: 100%; max-width: 430px;
-    padding: 6px 18px 20px;
+    padding: 8px 18px 28px;
     text-align: center; position: relative; z-index: 10;
+    flex-shrink: 0;
   }
   .daily-badge {
     display: inline-flex; align-items: center; gap: 7px;
