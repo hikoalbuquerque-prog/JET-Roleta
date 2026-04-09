@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JET – Roda da Sorte</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+  ✏️  ÁREA DE CONFIGURAÇÃO – EDITE AQUI OS PRÊMIOS
+
+  CAMPOS DE CADA PRÊMIO:
+  · name      → Texto curto na fatia da roleta (use \n para quebra de linha)
+  · label     → Título no modal de resultado
+  · detail    → Descrição do prêmio no modal
+  · icon      → Emoji que aparece no modal
+  · tag       → Etiqueta colorida (ex: "JET", "Nubank", "Vivo")
+  · tagColor  → Cor da etiqueta (#hex)
+  · win       → true = prêmio real | false = "tente novamente"
+  · weight    → Probabilidade (maior número = mais chance de sair)
+  · sliceColor→ Cor da fatia na roda
+  · ctaLabel  → Texto do botão no modal
+  · ctaAction → Ação ao clicar no botão
+
+  PARA ADICIONAR: copie um bloco { ... } e ajuste.
+  PARA REMOVER: apague o bloco inteiro.
+  A roleta se ajusta sozinha ao número de prêmios.
+============================================================ -->
+<script>
+const PRIZES = [
+  // ── JET ──────────────────────────────────────────────
+  {
+    name:       "Bônus\nR$50",
+    label:      "Bônus JET de R$50",
+    detail:     "Crédito de R$50 adicionado à sua conta JET. Válido por 30 dias.",
+    icon:       "💸",
+    tag:        "JET",
+    tagColor:   "#1565C0",
+    win:        true,
+    weight:     10,
+    sliceColor: "#1565C0",
+    ctaLabel:   "VER MINHA CONTA",
+    ctaAction:  () => alert("Redirecionar para conta JET"),
+  },
+  {
+    name:       "Bônus\nR$100",
+    label:      "Bônus JET de R$100",
+    detail:     "Crédito de R$100 adicionado à sua conta JET. Válido por 30 dias.",
+    icon:       "💰",
+    tag:        "JET",
+    tagColor:   "#1565C0",
+    win:        true,
+    weight:     6,
+    sliceColor: "#0D47A1",
+    ctaLabel:   "VER MINHA CONTA",
+    ctaAction:  () => alert("Redirecionar para conta JET"),
+  },
+  {
+    name:       "Bônus\nR$150",
+    label:      "Bônus JET de R$150! 🔥",
+    detail:     "Crédito de R$150 adicionado à sua conta JET. Válido por 30 dias.",
+    icon:       "🤑",
+    tag:        "JET",
+    tagColor:   "#1565C0",
+    win:        true,
+    weight:     3,
+    sliceColor: "#0A2E6E",
+    ctaLabel:   "VER MINHA CONTA",
+    ctaAction:  () => alert("Redirecionar para conta JET"),
+  },
+  {
+    name:       "1 Mês\nPlano Plus",
+    label:      "Plano Plus por 1 Mês Grátis!",
+    detail:     "Sua assinatura Plus foi ativada! Aproveite todos os benefícios exclusivos.",
+    icon:       "⭐",
+    tag:        "JET",
+    tagColor:   "#1565C0",
+    win:        true,
+    weight:     5,
+    sliceColor: "#1976D2",
+    ctaLabel:   "ATIVAR PLANO",
+    ctaAction:  () => alert("Redirecionar para ativação do plano Plus"),
+  },
+
+  // ── PARCEIROS ─────────────────────────────────────────
+  {
+    name:       "R$30\nNubank",
+    label:      "R$30 de Crédito Nubank",
+    detail:     "Você ganhou R$30 em cashback no Nubank. Acesse o app para resgatar.",
+    icon:       "💜",
+    tag:        "Nubank",
+    tagColor:   "#820AD1",
+    win:        true,
+    weight:     6,
+    sliceColor: "#4A148C",
+    ctaLabel:   "RESGATAR NO NUBANK",
+    ctaAction:  () => alert("Redirecionar para resgate Nubank"),
+  },
+  {
+    name:       "R$25\nBanco BB",
+    label:      "R$25 de Bônus Banco do Brasil",
+    detail:     "Crédito de R$25 via Ourocard ou conta BB. Resgate pelo app BB.",
+    icon:       "🏦",
+    tag:        "Banco do Brasil",
+    tagColor:   "#C8A800",
+    win:        true,
+    weight:     6,
+    sliceColor: "#1B5E20",
+    ctaLabel:   "RESGATAR NO BB",
+    ctaAction:  () => alert("Redirecionar para resgate Banco do Brasil"),
+  },
+  {
+    name:       "1GB\nVivo",
+    label:      "1GB de Internet Vivo Grátis",
+    detail:     "1GB de dados bônus Vivo ativado no seu número. Válido por 7 dias.",
+    icon:       "📱",
+    tag:        "Vivo",
+    tagColor:   "#6600CC",
+    win:        true,
+    weight:     7,
+    sliceColor: "#38006B",
+    ctaLabel:   "VER DETALHES VIVO",
+    ctaAction:  () => alert("Redirecionar para detalhes Vivo"),
+  },
+
+  // ── TENTE NOVAMENTE ───────────────────────────────────
+  {
+    name:       "Tente\nNovamente",
+    label:      "Não foi dessa vez...",
+    detail:     "Não desanime! Você pode tentar novamente amanhã.",
+    icon:       "🍀",
+    tag:        null,
+    tagColor:   null,
+    win:        false,
+    weight:     18,
+    sliceColor: "#1A2744",
+    ctaLabel:   "FECHAR",
+    ctaAction:  null,
+  },
+];
+
+const CONFIG = {
+  subtitulo:    "Gire e ganhe prêmios JET exclusivos todos os dias!",
+  girosPerDia:  1,
+  spinDuration: 4000,
+};
+</script>
+<!-- ============================================================ FIM DA CONFIGURAÇÃO ============================================================ -->
+
+<style>
+  :root {
+    --blue:       #1565C0;
+    --blue-mid:   #1976D2;
+    --blue-light: #42A5F5;
+    --blue-pale:  #90CAF9;
+    --white:      #FFFFFF;
+    --bg:         #071428;
+    --bg2:        #0C1C38;
+    --bg3:        #112246;
+    --bg4:        #1A2E54;
+    --text:       #E8F4FD;
+    --muted:      #5B7A9D;
+    --accent:     #64B5F6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html { height: 100%; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 110% 50% at 50% -5%, rgba(21,101,192,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 35% at 15% 100%, rgba(66,165,245,0.08) 0%, transparent 55%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    width: 100%; max-width: 430px;
+    padding: 14px 18px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 10;
+    border-bottom: 1px solid rgba(66,165,245,0.1);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.55);
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem; letter-spacing: 3px;
+    color: var(--white); line-height: 1;
+  }
+  .logo-sub {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.55rem; font-weight: 700;
+    letter-spacing: 1.5px; color: var(--accent);
+    text-transform: uppercase; margin-top: 1px;
+  }
+
+  .header-badge {
+    background: rgba(21,101,192,0.15);
+    border: 1px solid rgba(66,165,245,0.2);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.72rem; color: var(--accent);
+    display: flex; align-items: center; gap: 6px;
+    font-weight: 700; letter-spacing: 0.5px;
+  }
+
+  .dot-live {
+    width: 7px; height: 7px;
+    background: #4CAF50; border-radius: 50%;
+    box-shadow: 0 0 8px #4CAF50;
+    animation: blink 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  /* ── HERO ── */
+  .hero {
+    width: 100%; max-width: 430px;
+    text-align: center;
+    padding: 14px 18px 0;
+    position: relative; z-index: 10;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(21,101,192,0.18);
+    border: 1px solid rgba(66,165,245,0.25);
+    color: var(--accent);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
+    padding: 4px 13px; border-radius: 30px;
+    margin-bottom: 7px; text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.9rem, 7.5vw, 2.5rem);
+    line-height: 1.05; letter-spacing: 4px;
+    color: var(--white);
+  }
+  .hero h1 em {
+    color: var(--blue-light);
+    font-style: normal;
+    text-shadow: 0 0 28px rgba(66,165,245,0.45);
+  }
+
+  .hero p { font-size: 0.8rem; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+
+  /* ── WHEEL SECTION ── */
+  .wheel-section {
+    width: 100%; max-width: 430px;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 16px 18px 0;
+    position: relative; z-index: 10;
+  }
+
+  .pointer-wrap {
+    position: relative;
+    --wsize: min(290px, calc(100vw - 52px));
+    width: var(--wsize); height: var(--wsize);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .pointer {
+    position: absolute; top: -13px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 22px solid var(--white);
+    filter: drop-shadow(0 2px 8px rgba(255,255,255,0.7));
+    z-index: 20;
+  }
+
+  .wheel-outer {
+    width: var(--wsize); height: var(--wsize);
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.85);
+    box-shadow:
+      0 0 0 2px var(--blue-mid),
+      0 0 45px rgba(21,101,192,0.55),
+      inset 0 0 35px rgba(0,0,0,0.45);
+    position: relative;
+  }
+
+  .wheel-center {
+    position: absolute;
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, #fff 0%, #B3D4FF 100%);
+    border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border: 3px solid rgba(255,255,255,0.95);
+    box-shadow: 0 0 22px rgba(66,165,245,0.9), 0 4px 12px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.45rem; z-index: 15;
+  }
+
+  /* ── SPIN BUTTON ── */
+  .spin-btn {
+    margin-top: 18px;
+    width: 100%; max-width: var(--wsize, 290px);
+    padding: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 3px; color: #fff;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue));
+    border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 6px 24px rgba(21,101,192,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.15s ease;
+    position: relative; overflow: hidden;
+    -webkit-appearance: none;
+  }
+  .spin-btn::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transition: left 0.45s;
+  }
+  .spin-btn:hover::after { left: 100%; }
+  .spin-btn:active { transform: scale(0.97); opacity: 0.9; }
+  .spin-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .spins-info {
+    font-size: 0.74rem; color: var(--muted); margin-top: 8px; text-align: center;
+  }
+  .spins-info strong { color: var(--blue-light); }
+
+  /* ── PRIZES ── */
+  .prizes-section {
+    width: 100%; max-width: 430px;
+    padding: 20px 18px 8px;
+    position: relative; z-index: 10;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 2px; color: var(--muted);
+    margin-bottom: 11px; text-align: center; text-transform: uppercase;
+  }
+
+  .prizes-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+
+  .prize-card {
+    background: var(--bg2);
+    border: 1px solid var(--bg4);
+    border-radius: 12px;
+    padding: 11px 10px;
+    display: flex; align-items: center; gap: 9px;
+    transition: border-color 0.2s;
+  }
+  .prize-card:active { border-color: var(--blue-light); background: var(--bg3); }
+
+  .prize-card-icon { font-size: 1.35rem; flex-shrink: 0; }
+
+  .prize-card-info { flex: 1; min-width: 0; }
+
+  .prize-card-name {
+    font-weight: 700; font-size: 0.77rem; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
+  }
+
+  .prize-card-tag {
+    display: inline-block;
+    font-size: 0.58rem; font-weight: 800; letter-spacing: 0.5px;
+    padding: 1px 6px; border-radius: 8px; color: #fff; margin-top: 3px;
+  }
+
+  /* ── DAILY ── */
+  .daily-info {
+    width: 100%; max-width: 430px;
+    padding: 6px 18px 20px;
+    text-align: center; position: relative; z-index: 10;
+  }
+  .daily-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--bg2); border: 1px solid var(--bg4);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 0.72rem; color: var(--muted);
+  }
+
+  /* ── MODAL (bottom sheet) ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(4,10,24,0.92); z-index: 100;
+    align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .modal {
+    background: var(--bg2);
+    border-radius: 24px 24px 0 0;
+    width: 100%; max-width: 430px;
+    padding: 30px 22px 28px;
+    text-align: center;
+    border-top: 1px solid var(--bg4);
+    position: relative;
+    animation: slideUp 0.32s cubic-bezier(0.34,1.3,0.64,1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(70px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+  .modal::before {
+    content: ''; position: absolute; top: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 38px; height: 4px; background: var(--bg4); border-radius: 2px;
+  }
+
+  .modal-partner-tag {
+    display: none;
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 12px; border-radius: 20px; color: #fff; margin-bottom: 10px;
+  }
+
+  .modal-icon {
+    font-size: 3.4rem; margin-bottom: 8px; display: block;
+    animation: popIn 0.4s cubic-bezier(0.34,1.6,0.64,1) 0.1s both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0) rotate(-10deg); } to { transform: scale(1) rotate(0); }
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.85rem; letter-spacing: 3px; margin-bottom: 4px;
+  }
+  .modal-title.win  { color: var(--blue-light); text-shadow: 0 0 18px rgba(66,165,245,0.4); }
+  .modal-title.lose { color: var(--muted); }
+
+  .modal-prize { font-size: 1.15rem; font-weight: 900; color: var(--white); margin-bottom: 7px; }
+
+  .modal-detail { font-size: 0.83rem; color: var(--muted); line-height: 1.55; margin-bottom: 20px; }
+
+  .modal-btn {
+    width: 100%; padding: 15px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 2px; color: #fff;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue));
+    border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(21,101,192,0.4);
+    transition: opacity 0.15s; -webkit-appearance: none;
+  }
+  .modal-btn:active { opacity: 0.85; transform: scale(0.98); }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--bg3); border: 1px solid var(--bg4);
+    color: var(--muted); width: 30px; height: 30px; border-radius: 50%;
+    font-size: 0.85rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s;
+  }
+  .modal-close:active { color: var(--white); }
+
+  /* ── CONFETTI ── */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 200; overflow: hidden; }
+  .confetti-piece { position: absolute; top: -12px; animation: confettiFall linear forwards; }
+  @keyframes confettiFall { to { transform: translateY(110vh) rotate(800deg); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🛴</div>
+    <div>
+      <div class="logo-text">JET</div>
+      <div class="logo-sub">Mobilidade Urbana</div>
+    </div>
+  </div>
+  <div class="header-badge">
+    <div class="dot-live"></div>
+    1 giro hoje
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">✨ Exclusivo para clientes JET</div>
+  <h1>RODA DA <em>SORTE</em></h1>
+  <p id="subtituloEl"></p>
+</div>
+
+<div class="wheel-section">
+  <div class="pointer-wrap">
+    <div class="pointer"></div>
+    <div class="wheel-outer" id="wheel">
+      <div class="wheel-center">🛴</div>
+    </div>
+  </div>
+  <button class="spin-btn" id="spinBtn" onclick="spinWheel()">GIRAR AGORA</button>
+  <div class="spins-info">Você tem <strong id="spinsCount">1</strong> giro disponível hoje</div>
+</div>
+
+<div class="prizes-section">
+  <div class="section-title">Prêmios desta rodada</div>
+  <div class="prizes-grid" id="prizesGrid"></div>
+</div>
+
+<div class="daily-info">
+  <div class="daily-badge">
+    <div class="dot-live"></div>
+    Giro recarrega à meia-noite
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-partner-tag" id="modalTag"></div>
+    <span class="modal-icon" id="modalIcon"></span>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-prize" id="modalPrize"></div>
+    <div class="modal-detail" id="modalDetail"></div>
+    <button class="modal-btn" id="modalBtn" onclick="handleModalCta()"></button>
+  </div>
+</div>
+
+<div class="confetti-container" id="confetti"></div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  🔒 CONTROLE DE USUÁRIOS — STUB (implementar depois)
+// ════════════════════════════════════════════════════════
+const UserControl = {
+  async hasSpunToday(userId = null) {
+    // TODO: implementar verificação real
+    // Exemplo localStorage:
+    // const key = `jet_spin_${userId||'anon'}_${new Date().toDateString()}`;
+    // return !!localStorage.getItem(key);
+    return false;
+  },
+  async saveSpinRecord(userId = null, prizeWon = null) {
+    // TODO: implementar persistência real
+    // Exemplo localStorage:
+    // const key = `jet_spin_${userId||'anon'}_${new Date().toDateString()}`;
+    // localStorage.setItem(key, JSON.stringify({ ts: Date.now(), prize: prizeWon?.label }));
+    // Exemplo API REST:
+    // await fetch('/api/spins', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ userId, prize: prizeWon?.label }) });
+    console.log('[JET] Spin salvo:', prizeWon?.label ?? 'nenhum');
+  },
+  getCurrentUserId() {
+    // return window.__JET_USER_ID || null;
+    return null;
+  },
+};
+
+// ════════════════════════════════════════════════════════
+//  INICIALIZAÇÃO
+// ════════════════════════════════════════════════════════
+document.getElementById('subtituloEl').textContent = CONFIG.subtitulo;
+
+PRIZES.filter(p => p.win).forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'prize-card';
+  card.innerHTML = `
+    <div class="prize-card-icon">${p.icon}</div>
+    <div class="prize-card-info">
+      <div class="prize-card-name">${p.label}</div>
+      ${p.tag ? `<span class="prize-card-tag" style="background:${p.tagColor}">${p.tag}</span>` : ''}
+    </div>`;
+  document.getElementById('prizesGrid').appendChild(card);
+});
+
+// ════════════════════════════════════════════════════════
+//  CANVAS ROLETA
+// ════════════════════════════════════════════════════════
+const wheelEl = document.getElementById('wheel');
+const canvas  = document.createElement('canvas');
+canvas.style.cssText = 'position:absolute;top:0;left:0;border-radius:50%;';
+wheelEl.insertBefore(canvas, wheelEl.firstChild);
+
+function drawWheel(rotation = 0) {
+  const size = wheelEl.offsetWidth || Math.min(290, window.innerWidth - 52);
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const cx  = size / 2, cy = size / 2, r = size / 2 - 2;
+  const totalW = PRIZES.reduce((s, p) => s + p.weight, 0);
+  let angle = rotation - Math.PI / 2;
+  ctx.clearRect(0, 0, size, size);
+
+  PRIZES.forEach(p => {
+    const slice = (p.weight / totalW) * 2 * Math.PI;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.closePath();
+    ctx.fillStyle = p.sliceColor;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle + slice / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,0.9)';
+    ctx.shadowBlur = 5;
+    const lines = p.name.split('\n');
+    const lh = Math.max(11, size * 0.038);
+    const fs = Math.max(9, size * 0.034);
+    ctx.font = `bold ${fs}px Nunito, sans-serif`;
+    lines.forEach((line, li) => {
+      const y = -((lines.length - 1) * lh / 2) + li * lh;
+      ctx.fillText(line, r - 13, y + fs * 0.4);
+    });
+    ctx.restore();
+    angle += slice;
+  });
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+}
+
+let currentRotation = 0;
+drawWheel(0);
+window.addEventListener('resize', () => drawWheel(currentRotation));
+
+// ════════════════════════════════════════════════════════
+//  GIRO
+// ════════════════════════════════════════════════════════
+let spinning    = false;
+let spinsLeft   = CONFIG.girosPerDia;
+let activePrize = null;
+
+async function spinWheel() {
+  if (spinning || spinsLeft <= 0) return;
+  const uid = UserControl.getCurrentUserId();
+  if (await UserControl.hasSpunToday(uid)) { alert('Você já rodou hoje! Volte amanhã.'); return; }
+
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+
+  const totalW = PRIZES.reduce((s, p) => s + p.weight, 0);
+  let rand = Math.random() * totalW, chosen = 0;
+  for (let i = 0; i < PRIZES.length; i++) { rand -= PRIZES[i].weight; if (rand <= 0) { chosen = i; break; } }
+  activePrize = PRIZES[chosen];
+
+  let startAngle = -Math.PI / 2;
+  for (let i = 0; i < chosen; i++) startAngle += (PRIZES[i].weight / totalW) * 2 * Math.PI;
+  const sliceAng = (PRIZES[chosen].weight / totalW) * 2 * Math.PI;
+  const midAngle = startAngle + sliceAng / 2;
+  const needed   = -midAngle - Math.PI / 2;
+  const spins    = 6 + Math.floor(Math.random() * 3);
+  const target   = currentRotation + spins * 2 * Math.PI + needed - (currentRotation % (2 * Math.PI));
+  const t0 = performance.now(), dur = CONFIG.spinDuration, startRot = currentRotation;
+
+  requestAnimationFrame(function animate(now) {
+    const prog = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - prog, 4);
+    currentRotation = startRot + (target - startRot) * ease;
+    drawWheel(currentRotation);
+    if (prog < 1) { requestAnimationFrame(animate); return; }
+    spinning  = false;
+    spinsLeft = Math.max(0, spinsLeft - 1);
+    document.getElementById('spinsCount').textContent = spinsLeft;
+    if (spinsLeft === 0) document.getElementById('spinBtn').textContent = 'VOLTE AMANHÃ';
+    else document.getElementById('spinBtn').disabled = false;
+    UserControl.saveSpinRecord(uid, activePrize);
+    showResult(activePrize);
+  });
+}
+
+function showResult(prize) {
+  const tag = document.getElementById('modalTag');
+  tag.style.display = prize.tag ? 'inline-block' : 'none';
+  if (prize.tag) { tag.style.background = prize.tagColor; tag.textContent = prize.tag; }
+  document.getElementById('modalIcon').textContent   = prize.icon;
+  document.getElementById('modalTitle').textContent  = prize.win ? 'PARABÉNS!' : 'NÃO GANHOU';
+  document.getElementById('modalTitle').className    = 'modal-title ' + (prize.win ? 'win' : 'lose');
+  document.getElementById('modalPrize').textContent  = prize.label;
+  document.getElementById('modalDetail').textContent = prize.detail;
+  document.getElementById('modalBtn').textContent    = prize.ctaLabel;
+  document.getElementById('modal').classList.add('show');
+  if (prize.win) launchConfetti();
+}
+
+function handleModalCta() { if (activePrize?.ctaAction) activePrize.ctaAction(); else closeModal(); }
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  document.getElementById('confetti').innerHTML = '';
+}
+
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#1565C0','#1976D2','#42A5F5','#90CAF9','#BBDEFB','#ffffff','#64B5F6'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 6 + Math.random() * 9;
+    el.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.8+Math.random()*1.6}s;animation-delay:${Math.random()*.8}s;transform:rotate(${Math.random()*360}deg);`;
+    c.appendChild(el);
+  }
+  setTimeout(() => c.innerHTML = '', 4000);
+}
+</script>
+</body>
+</html>
