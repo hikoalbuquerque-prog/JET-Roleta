@@ -28,9 +28,12 @@
 ============================================================ -->
 <script>
 const PRIZES = [
-  // ── JET ──────────────────────────────────────────────
+
+  // Intercalado: JET → parceiro → JET → parceiro → ...
+  // Cores de marca de cada parceiro para fácil identificação
+
   {
-    name:       "Bônus\nR$50",
+    name:       "JET\nR$50",
     label:      "Bônus JET de R$50",
     detail:     "Crédito de R$50 adicionado à sua conta JET. Válido por 30 dias.",
     icon:       "💸",
@@ -38,74 +41,111 @@ const PRIZES = [
     tagColor:   "#1565C0",
     win:        true,
     weight:     10,
-    sliceColor: "#1565C0",
+    sliceColor: "#1565C0",   // azul JET
     ctaLabel:   "VER MINHA CONTA",
     ctaAction:  () => alert("Redirecionar para conta JET"),
   },
   {
-    name:       "Bônus\nR$100",
+    name:       "iFood\nR$10 Off",
+    label:      "R$10 de Desconto no iFood!",
+    detail:     "Cupom de R$10 off no seu próximo pedido no iFood. Válido por 7 dias.",
+    icon:       "🛵",
+    tag:        "iFood",
+    tagColor:   "#EA1D2C",
+    win:        true,
+    weight:     9,
+    sliceColor: "#EA1D2C",   // vermelho iFood
+    ctaLabel:   "RESGATAR NO IFOOD",
+    ctaAction:  () => alert("Redirecionar para resgate iFood"),
+  },
+  {
+    name:       "JET\nR$100",
     label:      "Bônus JET de R$100",
     detail:     "Crédito de R$100 adicionado à sua conta JET. Válido por 30 dias.",
     icon:       "💰",
     tag:        "JET",
     tagColor:   "#1565C0",
     win:        true,
-    weight:     6,
-    sliceColor: "#0D47A1",
+    weight:     8,
+    sliceColor: "#0D47A1",   // azul escuro JET
     ctaLabel:   "VER MINHA CONTA",
     ctaAction:  () => alert("Redirecionar para conta JET"),
   },
   {
-    name:       "Bônus\nR$150",
+    name:       "SmartFit\n20% Off",
+    label:      "20% Off na SmartFit!",
+    detail:     "20% de desconto no plano SmartFit. Apresente o cupom na recepção.",
+    icon:       "💪",
+    tag:        "SmartFit",
+    tagColor:   "#FFD000",
+    win:        true,
+    weight:     8,
+    sliceColor: "#C9A800",   // amarelo SmartFit
+    ctaLabel:   "VER CUPOM SMARTFIT",
+    ctaAction:  () => alert("Redirecionar para cupom SmartFit"),
+  },
+  {
+    name:       "JET\nPlano Plus",
+    label:      "Plano Plus — 1 Mês Grátis!",
+    detail:     "Sua assinatura Plus foi ativada! Aproveite todos os benefícios exclusivos.",
+    icon:       "⭐",
+    tag:        "JET",
+    tagColor:   "#1565C0",
+    win:        true,
+    weight:     8,
+    sliceColor: "#1976D2",   // azul médio JET
+    ctaLabel:   "ATIVAR PLANO",
+    ctaAction:  () => alert("Redirecionar para ativação do plano Plus"),
+  },
+  {
+    name:       "H2 Poker\n5 Rodadas",
+    label:      "5 Rodadas Grátis no H2 Poker!",
+    detail:     "Você ganhou 5 rodadas grátis no H2 Poker. Acesse o app para resgatar.",
+    icon:       "♠️",
+    tag:        "H2 Poker",
+    tagColor:   "#1B7F3A",
+    win:        true,
+    weight:     9,
+    sliceColor: "#1B7F3A",   // verde H2 Poker
+    ctaLabel:   "RESGATAR NO H2 POKER",
+    ctaAction:  () => alert("Redirecionar para resgate H2 Poker"),
+  },
+  {
+    name:       "JET\nR$150",
     label:      "Bônus JET de R$150! 🔥",
     detail:     "Crédito de R$150 adicionado à sua conta JET. Válido por 30 dias.",
     icon:       "🤑",
     tag:        "JET",
     tagColor:   "#1565C0",
     win:        true,
-    weight:     3,
-    sliceColor: "#0A2E6E",
+    weight:     8,
+    sliceColor: "#0A2E6E",   // azul navy JET
     ctaLabel:   "VER MINHA CONTA",
     ctaAction:  () => alert("Redirecionar para conta JET"),
   },
   {
-    name:       "1 Mês\nPlano Plus",
-    label:      "Plano Plus por 1 Mês Grátis!",
-    detail:     "Sua assinatura Plus foi ativada! Aproveite todos os benefícios exclusivos.",
-    icon:       "⭐",
-    tag:        "JET",
-    tagColor:   "#1565C0",
+    name:       "Urus\n20% Off",
+    label:      "20% Off no Urus Steak House!",
+    detail:     "20% de desconto no Urus Brazilian Steak House. Válido jantares de seg a qui.",
+    icon:       "🥩",
+    tag:        "Urus",
+    tagColor:   "#C0392B",
     win:        true,
-    weight:     5,
-    sliceColor: "#1976D2",
-    ctaLabel:   "ATIVAR PLANO",
-    ctaAction:  () => alert("Redirecionar para ativação do plano Plus"),
-  },
-
-  // ── PARCEIRO: H2 POKER ────────────────────────────────
-  {
-    name:       "5 Rodadas\nH2 Poker",
-    label:      "5 Rodadas Grátis no H2 Poker!",
-    detail:     "Você ganhou 5 rodadas grátis no H2 Poker. Acesse o app para resgatar.",
-    icon:       "♠️",
-    tag:        "H2 Poker",
-    tagColor:   "#B71C1C",
-    win:        true,
-    weight:     8,
-    sliceColor: "#7F0000",
-    ctaLabel:   "RESGATAR NO H2 POKER",
-    ctaAction:  () => alert("Redirecionar para resgate H2 Poker"),
+    weight:     7,
+    sliceColor: "#8B1A1A",   // bordô Urus
+    ctaLabel:   "VER CUPOM URUS",
+    ctaAction:  () => alert("Redirecionar para cupom Urus"),
   },
   {
-    name:       "10 Rodadas\nH2 Poker",
+    name:       "H2 Poker\n10 Rodadas",
     label:      "10 Rodadas Grátis no H2 Poker!",
     detail:     "Você ganhou 10 rodadas grátis no H2 Poker. Acesse o app para resgatar.",
     icon:       "🃏",
     tag:        "H2 Poker",
-    tagColor:   "#B71C1C",
+    tagColor:   "#1B7F3A",
     win:        true,
-    weight:     5,
-    sliceColor: "#5D0000",
+    weight:     8,
+    sliceColor: "#145E2A",   // verde escuro H2 Poker
     ctaLabel:   "RESGATAR NO H2 POKER",
     ctaAction:  () => alert("Redirecionar para resgate H2 Poker"),
   },
@@ -119,7 +159,7 @@ const PRIZES = [
     tag:        null,
     tagColor:   null,
     win:        false,
-    weight:     18,
+    weight:     15,
     sliceColor: "#1A2744",
     ctaLabel:   "FECHAR",
     ctaAction:  null,
@@ -525,7 +565,80 @@ const CONFIG = {
   }
   .modal-close:active { color: var(--white); }
 
-  /* ── CONFETTI ── */
+  /* ── RULES SECTION ── */
+  .rules-section {
+    width: 100%; max-width: 430px;
+    padding: 4px 18px 28px;
+    position: relative; z-index: 10;
+  }
+
+  .rules-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 2px; color: var(--muted);
+    margin-bottom: 11px; text-align: center; text-transform: uppercase;
+  }
+
+  .rules-card {
+    background: var(--bg2);
+    border: 1px solid var(--bg4);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .rule-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--bg4);
+  }
+  .rule-item:last-child { border-bottom: none; }
+
+  .rule-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .rule-text { flex: 1; min-width: 0; }
+
+  .rule-title {
+    font-weight: 800; font-size: 0.82rem; color: var(--text);
+    line-height: 1.3; margin-bottom: 2px;
+  }
+
+  .rule-desc {
+    font-size: 0.73rem; color: var(--muted); line-height: 1.45;
+  }
+
+  .rule-badge {
+    display: inline-block;
+    background: rgba(21,101,192,0.2);
+    border: 1px solid rgba(66,165,245,0.2);
+    color: var(--accent);
+    font-size: 0.62rem; font-weight: 800; letter-spacing: 0.5px;
+    padding: 1px 7px; border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  .rules-suggest {
+    margin-top: 10px;
+    background: rgba(21,101,192,0.08);
+    border: 1px solid rgba(66,165,245,0.15);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .rules-suggest-title {
+    font-size: 0.72rem; font-weight: 800;
+    color: var(--accent); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .suggest-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    margin-bottom: 6px; font-size: 0.73rem; color: var(--muted); line-height: 1.4;
+  }
+  .suggest-item:last-child { margin-bottom: 0; }
+  .suggest-item span { flex-shrink: 0; }
   .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 200; overflow: hidden; }
   .confetti-piece { position: absolute; top: -12px; animation: confettiFall linear forwards; }
   @keyframes confettiFall { to { transform: translateY(110vh) rotate(800deg); opacity: 0; } }
@@ -577,6 +690,93 @@ const CONFIG = {
   <div class="daily-badge">
     <div class="dot-live"></div>
     Giro recarrega à meia-noite
+  </div>
+</div>
+
+<div class="rules-section">
+  <div class="rules-title">Como Ganhar Giros</div>
+  <div class="rules-card">
+
+    <div class="rule-item">
+      <div class="rule-icon">🎁</div>
+      <div class="rule-text">
+        <div class="rule-title">1 Giro Gratuito por Dia</div>
+        <div class="rule-desc">Todo dia à meia-noite seu giro diário é renovado automaticamente.</div>
+        <span class="rule-badge">DIÁRIO</span>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-icon">🛴</div>
+      <div class="rule-text">
+        <div class="rule-title">+1 Giro a Cada Corrida JET</div>
+        <div class="rule-desc">Pedalou com a JET? Ganhe um giro extra na roleta para cada corrida realizada.</div>
+        <span class="rule-badge">POR CORRIDA</span>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-icon">⭐</div>
+      <div class="rule-text">
+        <div class="rule-title">+3 Giros com Plano Plus</div>
+        <div class="rule-desc">Assinantes do Plano Plus recebem 3 giros extras por semana, todo domingo.</div>
+        <span class="rule-badge">PLUS</span>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-icon">👥</div>
+      <div class="rule-text">
+        <div class="rule-title">+2 Giros por Indicação</div>
+        <div class="rule-desc">Indique um amigo que complete a primeira corrida e ganhe 2 giros de bônus.</div>
+        <span class="rule-badge">INDICAÇÃO</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Regras adicionais -->
+  <div class="rules-suggest">
+    <div class="rule-item" style="border-bottom:1px solid var(--bg4);padding:12px 0 12px 0;">
+      <div class="rule-icon">🏆</div>
+      <div class="rule-text">
+        <div class="rule-title">+5 Giros — Desafio do Mês</div>
+        <div class="rule-desc">Complete 10 corridas em um mês e ganhe 5 giros de bônus no dia seguinte.</div>
+        <span class="rule-badge">MENSAL</span>
+      </div>
+    </div>
+    <div class="rule-item" style="border-bottom:1px solid var(--bg4);padding:12px 0 12px 0;">
+      <div class="rule-icon">🔥</div>
+      <div class="rule-text">
+        <div class="rule-title">Streak 7 Dias = Giro Premium</div>
+        <div class="rule-desc">Use a JET 7 dias seguidos e desbloqueie um giro especial com prêmios maiores.</div>
+        <span class="rule-badge">STREAK</span>
+      </div>
+    </div>
+    <div class="rule-item" style="border-bottom:1px solid var(--bg4);padding:12px 0 12px 0;">
+      <div class="rule-icon">🌟</div>
+      <div class="rule-text">
+        <div class="rule-title">Giro Duplo no seu Aniversário</div>
+        <div class="rule-desc">No dia do seu aniversário, todos os giros do dia rendem prêmios em dobro.</div>
+        <span class="rule-badge">ESPECIAL</span>
+      </div>
+    </div>
+    <div class="rule-item" style="border-bottom:1px solid var(--bg4);padding:12px 0 12px 0;">
+      <div class="rule-icon">📍</div>
+      <div class="rule-text">
+        <div class="rule-title">+1 Giro — Nova Cidade</div>
+        <div class="rule-desc">Use a JET em uma cidade nova pela primeira vez e ganhe um giro de explorador.</div>
+        <span class="rule-badge">EXPLORADOR</span>
+      </div>
+    </div>
+    <div class="rule-item" style="padding:12px 0 0 0;">
+      <div class="rule-icon">🤝</div>
+      <div class="rule-text">
+        <div class="rule-title">+1 Giro — Parceiros JET</div>
+        <div class="rule-desc">Consuma em estabelecimentos parceiros JET e ganhe giros extras no mesmo dia.</div>
+        <span class="rule-badge">PARCEIROS</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -647,23 +847,30 @@ canvas.style.cssText = 'position:absolute;top:0;left:0;border-radius:50%;';
 wheelEl.insertBefore(canvas, wheelEl.firstChild);
 
 function drawWheel(rotation = 0) {
+  const dpr  = window.devicePixelRatio || 1;
   const size = wheelEl.offsetWidth || Math.min(310, window.innerWidth - 40);
-  canvas.width = size; canvas.height = size;
+
+  // Canvas físico em alta resolução, CSS em tamanho lógico
+  canvas.width  = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width  = size + 'px';
+  canvas.style.height = size + 'px';
+
   const ctx = canvas.getContext('2d');
-  const cx  = size / 2, cy = size / 2;
+  ctx.scale(dpr, dpr); // tudo desenhado em coordenadas lógicas
+
+  const cx     = size / 2, cy = size / 2;
   const rOuter = size / 2 - 1;
-  const rInner = rOuter * 0.14; // hub radius
+  const rInner = rOuter * 0.14;
   const totalW = PRIZES.reduce((s, p) => s + p.weight, 0);
 
   ctx.clearRect(0, 0, size, size);
 
-  // ── 1. FATIAS ────────────────────────────────────────
+  // ── 1. FATIAS com clipping ────────────────────────────
   let angle = rotation - Math.PI / 2;
-  PRIZES.forEach((p, idx) => {
+  PRIZES.forEach(p => {
     const slice = (p.weight / totalW) * 2 * Math.PI;
-    const mid   = angle + slice / 2;
 
-    // Gradiente radial por fatia
     const grd = ctx.createRadialGradient(cx, cy, rInner, cx, cy, rOuter);
     grd.addColorStop(0,   lighten(p.sliceColor, 30));
     grd.addColorStop(0.5, p.sliceColor);
@@ -683,17 +890,16 @@ function drawWheel(rotation = 0) {
   angle = rotation - Math.PI / 2;
   PRIZES.forEach(p => {
     const slice = (p.weight / totalW) * 2 * Math.PI;
-    // linha separadora
     ctx.beginPath();
     ctx.moveTo(cx + rInner * Math.cos(angle), cy + rInner * Math.sin(angle));
     ctx.lineTo(cx + rOuter * Math.cos(angle), cy + rOuter * Math.sin(angle));
     ctx.strokeStyle = 'rgba(200,160,0,0.6)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
-    // pino metálico no separador (a ~80% do raio)
+
     const pinR = rOuter * 0.82;
-    const px2 = cx + pinR * Math.cos(angle);
-    const py2 = cy + pinR * Math.sin(angle);
+    const px2  = cx + pinR * Math.cos(angle);
+    const py2  = cy + pinR * Math.sin(angle);
     ctx.beginPath();
     ctx.arc(px2, py2, size * 0.012, 0, 2 * Math.PI);
     const pinGrd = ctx.createRadialGradient(px2 - size*0.004, py2 - size*0.004, 0, px2, py2, size*0.012);
@@ -705,43 +911,74 @@ function drawWheel(rotation = 0) {
     angle += slice;
   });
 
-  // ── 3. ANEL BRILHANTE INTERNO ─────────────────────────
+  // ── 3. ANEL INTERNO ───────────────────────────────────
   ctx.beginPath();
   ctx.arc(cx, cy, rOuter * 0.88, 0, 2 * Math.PI);
   ctx.strokeStyle = 'rgba(200,160,0,0.25)';
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  // ── 4. TEXTO NAS FATIAS ───────────────────────────────
+  // ── 4. TEXTO — centralizado no meio da fatia ─────────
   angle = rotation - Math.PI / 2;
   PRIZES.forEach(p => {
     const slice = (p.weight / totalW) * 2 * Math.PI;
     const mid   = angle + slice / 2;
 
+    // Ponto radial — mais perto da borda para texto maior
+    const textR = rInner + (rOuter * 0.88 - rInner) * 0.72;
+
+    // Fonte maior
+    const sliceFrac = p.weight / totalW;
+    const maxFs = size * 0.050;
+    const minFs = size * 0.030;
+    const fs    = Math.max(minFs, Math.min(maxFs, minFs + (maxFs - minFs) * (sliceFrac / 0.14)));
+    const lh    = fs * 1.2;
+
+    // Largura do arco disponível nessa distância
+    const arcWidth = 2 * textR * Math.sin(slice / 2) * 0.80;
+
     ctx.save();
-    ctx.translate(cx, cy);
-    // Rotacionar para o centro da fatia
-    ctx.rotate(mid);
-    // Texto vai da direita (borda) para esquerda (centro), ao longo do eixo X
-    ctx.textAlign = 'center';
+
+    // Clip dentro da fatia
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, rOuter * 0.91, angle + 0.015, angle + slice - 0.015);
+    ctx.closePath();
+    ctx.clip();
+
+    // Mover origem para o centro geométrico da fatia
+    ctx.translate(
+      cx + textR * Math.cos(mid),
+      cy + textR * Math.sin(mid)
+    );
+
+    // Rotacionar para ficar perpendicular ao raio (legível)
+    // +π/2 gira o texto para ficar de pé na direção da fatia
+    ctx.rotate(mid + Math.PI / 2);
+
+    ctx.textAlign    = 'center';
     ctx.textBaseline = 'middle';
+    ctx.shadowColor  = 'rgba(0,0,0,0.95)';
+    ctx.shadowBlur   = 5;
+    ctx.font         = `900 ${fs}px Nunito, sans-serif`;
 
-    ctx.shadowColor = 'rgba(0,0,0,0.95)';
-    ctx.shadowBlur = 5;
+    // Texto escuro no SmartFit (fundo amarelo), branco nos demais
+    ctx.fillStyle = p.sliceColor === '#C9A800' ? '#1A1A00' : '#fff';
 
-    const lines = p.name.split('\n');
-    const fs = Math.max(8.5, size * 0.031);
-    const lh = fs * 1.3;
-    ctx.font = `900 ${fs}px Nunito, sans-serif`;
-    ctx.fillStyle = '#fff';
-
-    // Posição X = distância do centro onde o texto aparece (ao longo do raio)
-    const textDist = rOuter * 0.62;
+    const lines      = p.name.split('\n');
     const totalTextH = (lines.length - 1) * lh;
 
     lines.forEach((line, li) => {
-      const offsetY = -totalTextH / 2 + li * lh;
-      ctx.fillText(line, textDist, offsetY);
+      const y = -totalTextH / 2 + li * lh;
+      const w = ctx.measureText(line).width;
+      if (w > arcWidth) {
+        ctx.save();
+        ctx.scale(arcWidth / w, 1);
+        ctx.fillText(line, 0, y);
+        ctx.restore();
+      } else {
+        ctx.fillText(line, 0, y);
+      }
     });
 
     ctx.restore();
@@ -749,7 +986,6 @@ function drawWheel(rotation = 0) {
   });
 
   // ── 5. ANEL EXTERNO DOURADO ───────────────────────────
-  // Anel de fundo
   ctx.beginPath();
   ctx.arc(cx, cy, rOuter, 0, 2 * Math.PI);
   const rimGrd = ctx.createLinearGradient(0, 0, size, size);
@@ -757,10 +993,10 @@ function drawWheel(rotation = 0) {
   rimGrd.addColorStop(0.5, '#C8A000');
   rimGrd.addColorStop(1, '#FFE566');
   ctx.strokeStyle = rimGrd;
-  ctx.lineWidth = 5;
+  ctx.lineWidth   = 5;
   ctx.stroke();
 
-  // Bolinhas decorativas no aro
+  // Bolinhas decorativas
   const nBalls = 24;
   for (let i = 0; i < nBalls; i++) {
     const a  = (i / nBalls) * 2 * Math.PI;
